@@ -1,10 +1,20 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
+import { AuthModule } from './modules/auth/auth.module';
+import { PetsModule } from './modules/pets/pets.module';
+import { UsersModule } from './modules/users/users.module';
+import { VetsModule } from './modules/vets/vets.module';
+
+import configModuleBootstrapper from './bootstrappers/config-module.bootstrapper';
+import typeormModuleBootstrapper from './bootstrappers/typeorm-module.bootstrapper';
 
 @Module({
-  imports: [],
-  controllers: [AppController],
-  providers: [AppService],
+  imports: [
+    configModuleBootstrapper(),
+    typeormModuleBootstrapper(),
+    UsersModule,
+    AuthModule,
+    PetsModule,
+    VetsModule
+  ]
 })
 export class AppModule {}
