@@ -8,6 +8,7 @@ import configModuleBootstrapper from './bootstrappers/config-module.bootstrapper
 import typeormModuleBootstrapper from './bootstrappers/typeorm-module.bootstrapper';
 import { APP_PIPE } from '@nestjs/core';
 import { ZodValidationPipe } from 'nestjs-zod';
+import { BreedsModule } from './modules/breeds/breeds.module';
 
 @Module({
 	imports: [
@@ -16,7 +17,8 @@ import { ZodValidationPipe } from 'nestjs-zod';
 		UsersModule,
 		AuthModule,
 		PetsModule,
-		VetsModule
+		VetsModule,
+		BreedsModule
 	],
 	providers: [{ provide: APP_PIPE, useClass: ZodValidationPipe }]
 })

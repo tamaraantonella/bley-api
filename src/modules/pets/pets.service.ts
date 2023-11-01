@@ -1,23 +1,33 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { BreedsService } from 'breeds/breeds.service';
+import { Repository } from 'typeorm';
+import { UsersService } from 'users/users.service';
 import { CreatePetDto } from './dto/create-pet.dto';
 import { UpdatePetDto } from './dto/update-pet.dto';
-import { Repository } from 'typeorm';
 import { Pet } from './entities/pet.entity';
-import { InjectRepository } from '@nestjs/typeorm';
-import { UsersService } from 'users/users.service';
+import {
+	ValidateRelationErrors,
+	ValidateRelationsOutput
+} from './types/validate-relations';
 
 @Injectable()
 export class PetsService {
 	constructor(
 		@InjectRepository(Pet)
 		private readonly petsRepository: Repository<Pet>,
-		private usersService: UsersService
+		private usersService: UsersService,
+		private breedsService: BreedsService
 	) {}
 
 	async create(ownerId: string, createPetDto: CreatePetDto): Promise<Pet> {
-		const foundOwner = await this.usersService.findById(ownerId);
-		if (!foundOwner) {
-			throw new NotFoundException('Owner not found');
+		const validation = await this.validateRelations(
+			ownerId,
+			createPetDto.breedId
+		);
+
+		if (!validation) {
+			throw new BadRequestException(validation);
 		}
 
 		const newPet = await this.petsRepository.save({ ownerId, ...createPetDto });
@@ -42,5 +52,24 @@ export class PetsService {
 
 	remove(id: string) {
 		return this.petsRepository.softRemove({ id });
+	}
+
+	private async validateRelations(
+		ownerId: string,
+		breedId: number
+	): Promise<ValidateRelationsOutput> {
+		const errors: ValidateRelationErrors = {
+			ownerId: null,
+			breedId: null
+		};
+		const foundOwner = await this.usersService.findById(ownerId);
+		if (!foundOwner) {
+			errors.ownerId = 'Owner not found';
+		}
+		const foundBreed = await this.breedsService.findById(breedId);
+		if (!foundBreed) {
+			errors.breedId = 'Breed not found';
+		}
+		return true;
 	}
 }

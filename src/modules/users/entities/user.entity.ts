@@ -68,6 +68,6 @@ export class User {
 	@DeleteDateColumn()
 	deletedAt: Date;
 
-	@OneToMany(() => Pet, (pet) => pet.owner)
+	@OneToMany(() => Pet, (pet) => pet.breed)
 	pets: Pet[];
 }

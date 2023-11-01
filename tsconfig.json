@@ -23,7 +23,8 @@
       "users/*":["src/modules/users/*"],
 			"decorators/*": ["src/decorators/*"],
 			"utils/*": ["src/utils/*"],
-			"pets/*": ["src/modules/pets/*"]
+			"pets/*": ["src/modules/pets/*"],
+			"breeds/*": ["src/modules/breeds/*"]
 		}
 	}
 }

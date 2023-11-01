@@ -1,3 +1,4 @@
+import { Breed } from 'breeds/entities/breed.entity';
 import {
 	Column,
 	CreateDateColumn,
@@ -22,6 +23,9 @@ export class Pet {
 
 	@Column('varchar', { length: 25, nullable: false })
 	name: string;
+
+	@ManyToOne(() => Breed, (breed) => breed.pets)
+	breed: Breed;
 
 	@Column('integer', { nullable: false })
 	breedId: number;
