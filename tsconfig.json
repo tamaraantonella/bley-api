@@ -22,7 +22,8 @@
 			"config/*": ["src/config/*"],
       "users/*":["src/modules/users/*"],
 			"decorators/*": ["src/decorators/*"],
-			"utils/*": ["src/utils/*"]
+			"utils/*": ["src/utils/*"],
+			"pets/*": ["src/modules/pets/*"]
 		}
 	}
 }
