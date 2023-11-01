@@ -1,8 +1,10 @@
+import { Pet } from 'pets/entities/pet.entity';
 import {
 	Column,
 	CreateDateColumn,
 	DeleteDateColumn,
 	Entity,
+	OneToMany,
 	PrimaryGeneratedColumn,
 	UpdateDateColumn
 } from 'typeorm';
@@ -55,7 +57,7 @@ export class User {
 	role: UserRole;
 
 	@Column({ type: 'enum', enum: UserLang, default: UserLang.EN })
-	lang: string;
+	lang: UserLang;
 
 	@CreateDateColumn()
 	createdAt: Date;
@@ -65,4 +67,7 @@ export class User {
 
 	@DeleteDateColumn()
 	deletedAt: Date;
+
+	@OneToMany(() => Pet, (pet) => pet.owner)
+	pets: Pet[];
 }
