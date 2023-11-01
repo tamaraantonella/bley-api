@@ -1,5 +1,6 @@
 import { createZodDto } from 'nestjs-zod';
 import { z } from 'nestjs-zod/z';
+import { UserLang } from 'users/entities/user.entity';
 
 const RegisterSchema = z.object({
 	firstName: z.string().trim().min(3).max(255),
@@ -10,7 +11,7 @@ const RegisterSchema = z.object({
 	postalCode: z.string().min(3).max(10).nullish(),
 	phone: z.string().min(3).max(50).nullish(),
 	address: z.string().min(3).max(200).nullish(),
-	lang: z.string().min(2).max(2).nullish()
+	lang: z.enum([UserLang.EN, UserLang.ES]).default(UserLang.EN)
 });
 
 export class RegisterDto extends createZodDto(RegisterSchema) {}

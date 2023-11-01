@@ -6,7 +6,7 @@ export class Breed {
 	@PrimaryGeneratedColumn('increment')
 	id: number;
 
-	@Column({ length: 50, nullable: false })
+	@Column('varchar', { length: 50, nullable: false })
 	name: string;
 
 	@CreateDateColumn()
@@ -16,8 +16,8 @@ export class Breed {
 	modifiedAt: Date;
 
 	@DeleteDateColumn()
-  deletedAt: Date;
+	deletedAt: Date;
 
-  @OneToMany(() => Pet, (pet) => pet.breed)
-  pets: Pet[];
+	@OneToMany(() => Pet, (pet) => pet.breed)
+	pets: Pet[];
 }

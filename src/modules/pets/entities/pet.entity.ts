@@ -33,13 +33,13 @@ export class Pet {
 	@ManyToOne(() => User, (user) => user.pets)
 	owner: User;
 
-	@Column('string', { nullable: false })
+	@Column('varchar', { nullable: false })
 	ownerId: string;
 
 	@Column('integer', { nullable: false })
 	specieId: number;
 
-	@Column('string')
+	@Column('varchar')
 	image: string;
 
 	@Column('integer')

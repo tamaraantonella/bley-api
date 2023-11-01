@@ -20,6 +20,7 @@ import { UsersService } from './users.service';
 export class UsersController {
 	constructor(private readonly usersService: UsersService) {}
 
+	@Auth(Role.USER)
 	@Get('me')
 	findMyProfile(@JwtPayload() jwtPayload: JWTPayload) {
 		return this.usersService.findById(jwtPayload.id);
